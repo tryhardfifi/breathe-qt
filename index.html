@@ -2163,10 +2163,11 @@
 </script>
 
     <meta charset="utf-8">
-
+	<style> body {margin: 0; overflow: hidden;} </style>
   </head>
   <body>
-    <script >
+
+    <script>
         var panel;
 
         var breathingIn = 3;
@@ -2270,7 +2271,7 @@
                 case 'breatheIn':
                     bgcolor = breathingInColor;
                     endFrame = startFrame + breathingIn * 60;
-                    radius = 100 + (endFrame - frameCount) / (endFrame - startFrame) * 100;
+                    radius = 0.3 * Math.min(window.height, window.width) + (endFrame - frameCount) / (endFrame - startFrame) * 0.5 * Math.min(window.height, window.width);
                     ellipse(window.innerWidth / 2, window.innerHeight / 2, radius);
                     if (frameCount == endFrame) {
                         state = 'firstHolding';
@@ -2280,7 +2281,7 @@
                 case 'firstHolding':
                     bgcolor = holdingColor;
                     endFrame = startFrame + (firstHolding + 0.1) * 60;
-                    ellipse(window.innerWidth / 2, window.innerHeight / 2, 100);
+                    ellipse(window.innerWidth / 2, window.innerHeight / 2, 0.3 * Math.min(window.height, window.width));
                     if (frameCount == endFrame) {
                         state = 'breatheOut';
                         startFrame = frameCount;
@@ -2289,7 +2290,7 @@
                 case 'breatheOut':
                     bgcolor = breathingOutColor;
                     endFrame = startFrame + breathingOut * 60;
-                    radius = 200 - (endFrame - frameCount) / (endFrame - startFrame) * 100;
+                    radius = 0.8 * Math.min(window.height, window.width) + (endFrame - frameCount) / (endFrame - startFrame) * 0.5 * Math.min(window.height, window.width);
                     ellipse(window.innerWidth / 2, window.innerHeight / 2, radius);
                     if (frameCount == endFrame) {
                         state = 'secondHolding';
@@ -2299,7 +2300,7 @@
                 case 'secondHolding':
                     bgcolor = holdingColor;
                     endFrame = startFrame + (secondHolding + 0.1) * 60;
-                    ellipse(window.innerWidth / 2, window.innerHeight / 2, 200);
+                    ellipse(window.innerWidth / 2, window.innerHeight / 2, 0.8 * Math.min(window.height, window.width));
                     if (frameCount == endFrame) {
                         state = 'breatheIn';
                         startFrame = frameCount;
