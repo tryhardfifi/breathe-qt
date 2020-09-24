@@ -2167,157 +2167,146 @@
   </head>
   <body>
     <script >
-    var panel;
+        var panel;
 
-    var breathingIn = 3;
-    var breathingOut = 2;
-    var firstHolding = 2;
-    var secondHolding = 2;
+        var breathingIn = 3;
+        var breathingOut = 2;
+        var firstHolding = 2;
+        var secondHolding = 2;
 
-    var breathingInColor = '#00ddff';
-    var breathingOutColor = '#00ddff';
-    var holdingColor = '#00ddff';
+        var breathingInColor = '#00ddff';
+        var breathingOutColor = '#00ddff';
+        var holdingColor = '#00ddff';
 
-    var hidden = true
-    var i = 90;
+        var hidden = true
+        var i = 90;
 
-    window.onresize = function () {
-        resizeCanvas(window.innerWidth, window.innerHeight);
-    }
-
-    function setup() {
-      createCanvas(window.innerWidth,window.innerHeight);
-
-
-      breathingIn = parseFloat(localStorage.getItem('breathingIn'));
-      breathingOut = parseFloat(localStorage.getItem('breathingOut'));
-      firstholding = parseFloat(localStorage.getItem('firstHolding'));
-      secondHolding = parseFloat(localStorage.getItem('secondHolding'));
-
-      if (breathingIn == null){
-
-       breathingIn = 2;
-       breathingOut = 2;
-       firstHolding = 2;
-       secondHolding = 2;
-      }
-         breathingIn = 2;
-       breathingOut = 2;
-       firstHolding = 2;
-       secondHolding = 2;
-
-      panel = createGui("Breathe's preferences",20, 60);
-      button = createButton('⚙️');
-      button.position(20, 20);
-      button.style('font-size', '25px');
-      button.style("padding", "0")
-      button.style("border", "none")
-      button.style("background", "none")
-
-      button.mouseClicked(
-        function() {
-          if (hidden == true){
-            panel.show()
-            hidden = false
-           state=0
-            i=90
-          }
-          else{
-
-
-         localStorage.setItem('breathingIn', JSON.stringify(breathingIn));
-         localStorage.setItem('breathingOut',JSON.stringify(breathingOut));         localStorage.setItem('firstHolding',JSON.stringify(firstHolding));
-     localStorage.setItem('secondHolding',JSON.stringify(secondHolding));
-
-            panel.hide()
-            hidden = true
-
-
-          }
+        window.onresize = function() {
+            resizeCanvas(window.innerWidth, window.innerHeight);
         }
-      );
-      sliderRange(1, 10, 0.1);
-      panel.addGlobals('breathingIn');
 
-      sliderRange(0, 10, 0.1);
-      panel.addGlobals('firstHolding');
+        function setup() {
+            createCanvas(window.innerWidth, window.innerHeight);
 
-      sliderRange(1, 10, 0.1);
-      panel.addGlobals('breathingOut');
+            breathingIn = parseFloat(localStorage.getItem('breathingIn'));
+            breathingOut = parseFloat(localStorage.getItem('breathingOut'));
+            firstholding = parseFloat(localStorage.getItem('firstHolding'));
+            secondHolding = parseFloat(localStorage.getItem('secondHolding'));
 
-      sliderRange(0, 10, 0.1);
-      panel.addGlobals('secondHolding');
+            if (breathingIn == null) {
 
-      sliderRange(0, 255, 1);
-      panel.addGlobals('breathingInColor');
+                breathingIn = 2;
+                breathingOut = 2;
+                firstHolding = 2;
+                secondHolding = 2;
+            }
+            breathingIn = 2;
+            breathingOut = 2;
+            firstHolding = 2;
+            secondHolding = 2;
 
-      sliderRange(0, 255, 1);
-      panel.addGlobals('holdingColor');
+            panel = createGui("Breathe's preferences", 20, 60);
+            button = createButton('⚙️');
+            button.position(20, 20);
+            button.style('font-size', '25px');
+            button.style("padding", "0")
+            button.style("border", "none")
+            button.style("background", "none")
 
-      sliderRange(0, 255, 1);
-      panel.addGlobals('breathingOutColor');
+            button.mouseClicked(
+                function() {
+                    if (hidden == true) {
+                        panel.show()
+                        hidden = false
+                    } else {
+                        localStorage.setItem('breathingIn', JSON.stringify(breathingIn));
+                        localStorage.setItem('breathingOut', JSON.stringify(breathingOut));
+                        localStorage.setItem('firstHolding', JSON.stringify(firstHolding));
+                        localStorage.setItem('secondHolding', JSON.stringify(secondHolding));
 
-      panel.hide();
+                        panel.hide()
+                        hidden = true
 
+                        state = 'breatheIn';
+                        startFrame = frameCount;
+                    }
+                }
+            );
+            sliderRange(1, 10, 0.1);
+            panel.addGlobals('breathingIn');
 
-    }
-    var seconds = 0;
-    var state = 0;
-    var radius = 0;
-    var flag = false;
-    var p = 0;
-    var frame1 = frame2 = frame3 = frame4 = 0;
+            sliderRange(0, 10, 0.1);
+            panel.addGlobals('firstHolding');
 
-    function draw() {
+            sliderRange(1, 10, 0.1);
+            panel.addGlobals('breathingOut');
 
-      background(breathingInColor);
-      if (state != 4){
-         cycle = breathingIn + breathingOut + firstHolding + secondHolding
-         seconds = seconds + (frameCount%60)*1000/60;
+            sliderRange(0, 10, 0.1);
+            panel.addGlobals('secondHolding');
 
+            sliderRange(0, 255, 1);
+            panel.addGlobals('breathingInColor');
 
-          if (seconds == breathingIn*1000){
-              state = 1
-              frame2 = frameCount
-          } else if (seconds == breathingIn + firstHolding){
-              state = 2
-              frame3 = frameCount
-          } else if (seconds == cycle - secondHolding){
-              state = 3
-              frame4 = frameCount
-          } else if (seconds == 0){
-              state = 0
-              frame1 = frameCount
-          }
+            sliderRange(0, 255, 1);
+            panel.addGlobals('holdingColor');
 
+            sliderRange(0, 255, 1);
+            panel.addGlobals('breathingOutColor');
 
-      switch(state){
-        case 0:
-          background(breathingInColor);
-          p = (frameCount-frame1)/(breathingIn*60)
-          ellipse(window.innerWidth/2 ,window.innerHeight/2, 200 + 100*p)
+            panel.hide();
+        }
 
-          break;
-        case 1:
-          flag1 = false
-          background(holdingColor);
-          ellipse(window.innerWidth/2 ,window.innerHeight/2, 300)
-          break;
-        case 2:
-          p = (frameCount-frame3)/(breathingOut*60)
-          background(breathingOutColor);
-          ellipse(window.innerWidth/2 ,window.innerHeight/2, 300 - 100*p)
-          break;
-        case 3:
-          background(holdingColor);
-          ellipse(window.innerWidth/2 ,window.innerHeight/2, 200)
-          break;
-        default:
+        var state = 'breatheIn';
+        var startFrame = 0;
+        var endFrame = 0;
+        var radius = 0;
+        var bgcolor = 'black';
 
-      }
-    }
+        function draw() {
+            background(bgcolor);
+            if (!hidden) return;
 
-    }
+            switch (state) {
+                case 'breatheIn':
+                    bgcolor = breathingInColor;
+                    endFrame = startFrame + breathingIn * 60;
+                    radius = 100 + (endFrame - frameCount) / (endFrame - startFrame) * 100;
+                    ellipse(window.innerWidth / 2, window.innerHeight / 2, radius);
+                    if (frameCount == endFrame) {
+                        state = 'firstHolding';
+                        startFrame = frameCount;
+                    }
+                    break;
+                case 'firstHolding':
+                    bgcolor = holdingColor;
+                    endFrame = startFrame + (firstHolding + 0.1) * 60;
+                    ellipse(window.innerWidth / 2, window.innerHeight / 2, 100);
+                    if (frameCount == endFrame) {
+                        state = 'breatheOut';
+                        startFrame = frameCount;
+                    }
+                    break;
+                case 'breatheOut':
+                    bgcolor = breathingOutColor;
+                    endFrame = startFrame + breathingOut * 60;
+                    radius = 200 - (endFrame - frameCount) / (endFrame - startFrame) * 100;
+                    ellipse(window.innerWidth / 2, window.innerHeight / 2, radius);
+                    if (frameCount == endFrame) {
+                        state = 'secondHolding';
+                        startFrame = frameCount;
+                    }
+                    break;
+                case 'secondHolding':
+                    bgcolor = holdingColor;
+                    endFrame = startFrame + (secondHolding + 0.1) * 60;
+                    ellipse(window.innerWidth / 2, window.innerHeight / 2, 200);
+                    if (frameCount == endFrame) {
+                        state = 'breatheIn';
+                        startFrame = frameCount;
+                    }
+                    break;
+            }
+        }
 </script>
 
 
