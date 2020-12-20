@@ -30,7 +30,6 @@ jobs:
         run: echo Hello, world!
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.11.1
-        version: 4.13.0 
-        host: linux
+  
 
       
