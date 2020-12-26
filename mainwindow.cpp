@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *vLayout;
     QPushButton *button;
     QWidget *mainWidget;
-
 }
 
 

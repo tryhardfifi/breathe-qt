@@ -4,6 +4,8 @@
 #include <QApplication>
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QtWebEngineWidgets/QWebEnginePage>
+#include <QWebEngineSettings>
+
 
 #include <QVBoxLayout>
 
@@ -15,6 +17,9 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     QWebEngineView webView;
+    QWebEngineSettings *settings;
+    webView.settings()->setAttribute(QWebEngineSettings::LocalStorageEnabled,true);
+    webView.settings()->setAttribute(QWebEngineSettings::PluginsEnabled,true);
     webView.load(QUrl("qrc:///index.html"));
     webView.show();
 
