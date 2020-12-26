@@ -1,7 +1,9 @@
 QT       += core gui
  QT += webenginewidgets
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
+unix:!macx {
+    LIBS += -lX11
+}
 CONFIG += c++11
 QMAKE_LFLAGS += -no-pie
 # You can make your code fail to compile if it uses deprecated APIs.
