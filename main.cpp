@@ -5,6 +5,7 @@
 #include <QtWebEngineWidgets/QWebEngineView>
 #include <QtWebEngineWidgets/QWebEnginePage>
 #include <QWebEngineSettings>
+#include <QToolButton>
 
 
 #include <QVBoxLayout>
